@@ -28,11 +28,10 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener{ task ->
                 if (task.isSuccessful) {
                     val currentUser = mAuth.currentUser
-                    currentUser?.let { user ->
+                    currentUser?.let {
                         val database = com.google.firebase.Firebase.database
                         val usersRef = database.getReference("Users")
-                        val userNode = usersRef.child(user.uid)
-                        userNode.child("email").setValue(email)
+                        usersRef.child("email").setValue(email)
                     }
                     _createAccountSuccess.value = task.isSuccessful
                 }else{
